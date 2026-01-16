@@ -1,0 +1,4 @@
+some:
+  config:
+    sibling: "configuration was loaded from application.yml"
+    emptyMap: {}
