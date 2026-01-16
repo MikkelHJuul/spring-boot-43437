@@ -16,9 +16,26 @@ import java.util.Optional;
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
+    /**
+     * Run the application twice, one with normal config. Once again, manually, including the
+     * {@link TokenizingYamlPropertSourceLoader}.
+     * The output is:
+     *  INFO : Starting Main using Java 18 with PID 86483 (/Users/juul/IdeaProjects/spring-boot-43437/build/classes/java/main started by juul in /Users/juul/IdeaProjects/spring-boot-43437)
+     *  INFO : No active profile set, falling back to 1 default profile: "default"
+     * ERROR : emptyMap-token was not detected
+     *  INFO : sibling contained: configuration was loaded from application.yml
+     *  INFO : Started Main in 0.498 seconds (process running for 0.746)
+     *
+     * // with custom loader
+     * INFO : Starting Main using Java 18 with PID 86483 (/Users/juul/IdeaProjects/spring-boot-43437/build/classes/java/main started by juul in /Users/juul/IdeaProjects/spring-boot-43437)
+     * INFO : No active profile set, falling back to 1 default profile: "default"
+     * INFO : emptyMap-token was set
+     * INFO : sibling contained: configuration was loaded from application.yml
+     * INFO : Started Main in 0.05 seconds (process running for 0.798)
+     */
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
-        // have to be a bit manual here... but you can also not do this and uncomment the spring.factories line
+        // have to be a bit manual here... but you can also uncomment the line in META-INF/spring.factories
         new SpringApplicationBuilder(Main.class)
                 .initializers(ctx -> {
                     var propertySources = ctx.getEnvironment().getPropertySources();
